@@ -2,16 +2,11 @@
 
 ### Offensive Security Assessment & Reconnaissance Analysis
 
-BLACKOUT is a hands-on offensive cybersecurity project built to demonstrate an
-end-to-end penetration-testing workflow in an isolated VMware laboratory.
+BLACKOUT is a hands-on offensive cybersecurity project built to demonstrate an end-to-end penetration-testing workflow in an isolated VMware laboratory.
 
-The project combines network reconnaissance, vulnerability validation,
-controlled exploitation, post-exploitation verification, and Python-based
-analysis of Nmap results.
+The project combines network reconnaissance, vulnerability validation, controlled exploitation, post-exploitation verification, and Python-based analysis of Nmap results.
 
-> **Lab Environment:** All security testing was performed against an
-> intentionally vulnerable Metasploitable 2 virtual machine in an isolated
-> laboratory environment.
+> **Lab Environment:** All security testing was performed against an intentionally vulnerable Metasploitable 2 virtual machine in an isolated laboratory environment.
 
 ---
 
@@ -21,7 +16,7 @@ BLACKOUT was developed to gain practical experience with:
 
 - Network reconnaissance
 - TCP port and service enumeration
-- Service/version fingerprinting
+- Service and version fingerprinting
 - Vulnerability research
 - Vulnerability validation
 - Controlled exploitation
@@ -51,9 +46,8 @@ BLACKOUT was developed to gain practical experience with:
 Environment
 Component	Role	IP Address
 Kali Linux	Attacker / Assessment System	192.168.254.128
-Metasploitable 2	Vulnerable Target	192.168.254.130
+Metasploitable 2	Intentionally Vulnerable Target	192.168.254.130
 VMware Workstation Pro	Virtualization Platform	—
-
 🛠️ Technologies & Tools
 Offensive Security
 Kali Linux
@@ -61,14 +55,12 @@ Nmap
 Metasploit Framework
 Meterpreter
 Metasploitable 2
-
 Development
 Python 3
 Regular Expressions
 Command-line processing
 Nmap output parsing
-
-🔎 Methodology
+🔎 Assessment Methodology
 
 BLACKOUT follows a simplified penetration-testing methodology:
 
@@ -91,59 +83,47 @@ Privilege Verification
 Evidence Collection
       ↓
 Automated Analysis
-
 1. Reconnaissance
 
 Nmap was used to discover exposed TCP services and identify their versions.
 
-The assessment identified 23 open TCP services, including:
+The assessment identified 23 open TCP services, creating a broad attack surface for further investigation.
+
+The original reconnaissance output is preserved in:
+
+recon.txt
+
+Examples of discovered services included:
 
 21/tcp    FTP
 22/tcp    SSH
 23/tcp    Telnet
-25/tcp    SMTP
-53/tcp    DNS
 80/tcp    HTTP
-111/tcp   RPCBind
 139/tcp   NetBIOS
 445/tcp   SMB
-512/tcp   rexec
-513/tcp   rlogin
-514/tcp   rsh
-1099/tcp  Java RMI
-1524/tcp  Bind Shell
-2049/tcp  NFS
-2121/tcp  FTP
 3306/tcp  MySQL
 5432/tcp  PostgreSQL
 5900/tcp  VNC
-6000/tcp  X11
 6667/tcp  IRC
-8009/tcp  AJP13
 8180/tcp  HTTP
-
-The original reconnaissance data is preserved in:
-
-recon.txt
 2. Vulnerability Identification
 
-During service enumeration, the following service attracted further
-investigation:
+During service enumeration, the following service was selected for further investigation:
 
-Port:     21/tcp
-Service:  FTP
-Version:  vsftpd 2.3.4
+Field	Finding
+Port	21/tcp
+Service	FTP
+Version	vsftpd 2.3.4
+Vulnerability	CVE-2011-2523
+Severity	Critical
 
-The identified version is associated with:
+The identified version is associated with the vsftpd 2.3.4 backdoor vulnerability (CVE-2011-2523).
 
-CVE-2011-2523 — vsftpd 2.3.4 Backdoor
-
-The finding was treated as a candidate vulnerability rather than assuming
-that a version match alone proved exploitation.
+A version match alone was not treated as proof of successful exploitation. The finding was subsequently validated in the laboratory.
 
 3. Vulnerability Validation
 
-Metasploit was used to validate the finding in the isolated laboratory.
+Metasploit was used to validate the identified vulnerability.
 
 The module used was:
 
@@ -153,24 +133,21 @@ The vulnerability check reported:
 
 The target appears to be vulnerable.
 
-This provided a validation step before proceeding with controlled
-exploitation.
+This provided a validation step before proceeding with controlled exploitation.
 
 4. Controlled Exploitation
 
-The validated vulnerability was exploited against the Metasploitable 2
-laboratory target.
+The validated vulnerability was exploited exclusively against the isolated Metasploitable 2 laboratory target.
 
 A Meterpreter session was successfully established:
 
 Meterpreter session 1 opened
 
-The exploitation was performed exclusively against the intentionally
-vulnerable VM.
+This demonstrated successful remote compromise of the intentionally vulnerable system.
 
 5. Post-Exploitation Verification
 
-The obtained session was used to verify the level of access obtained.
+The obtained session was examined to verify the level of access and identify the compromised system.
 
 Identity Verification
 Server username: root
@@ -181,8 +158,7 @@ Computer     : metasploitable.localdomain
 OS           : Ubuntu 8.04
 Architecture : i686
 
-The evidence demonstrates that the controlled exploitation resulted in
-root-level access to the laboratory target.
+The evidence demonstrates that the controlled exploitation resulted in root-level access to the laboratory target.
 
 🐍 Python Analysis Tool
 
@@ -198,7 +174,7 @@ Maps known findings to vulnerability information.
 Produces a structured security assessment.
 Usage
 python3 blackout.py recon.txt
-Example
+Example Output
 =================================================================
                  BLACKOUT SECURITY ASSESSMENT
 =================================================================
@@ -227,31 +203,30 @@ Reason  : Known vsftpd 2.3.4 backdoor vulnerability
 📁 Project Structure
 blackout/
 │
+├── README.md
 ├── blackout.py
 ├── recon.txt
-├── README.md
 │
 └── evidence/
     ├── nmap.txt
     └── vulnerability.txt
 blackout.py
 
-The Python-based Nmap analysis and security finding classification tool.
+Python-based Nmap analysis and security finding classification tool.
 
 recon.txt
 
-Raw reconnaissance output used as input for the Python analysis tool.
+Raw Nmap reconnaissance output used as input for the Python analysis tool.
 
 evidence/nmap.txt
 
-Preserved Nmap reconnaissance evidence.
+Preserved Nmap reconnaissance evidence from the laboratory assessment.
 
 evidence/vulnerability.txt
 
-Documentation of vulnerability identification, validation, exploitation,
-and privilege verification.
+Documentation of vulnerability identification, validation, exploitation, and privilege verification.
 
-📊 Results
+📊 Assessment Results
 Category	Result
 Target	Metasploitable 2
 Open TCP Services	23
@@ -301,22 +276,17 @@ Planned improvements for future versions:
  Unit testing
  Additional Nmap output formats
 
-These features are planned for future versions and are not part of the
-current implementation.
+These features are planned for future versions and are not part of the current implementation.
 
 ⚠️ Disclaimer
 
-BLACKOUT was developed and tested exclusively in an authorized laboratory
-environment using an intentionally vulnerable Metasploitable 2 virtual
-machine.
+BLACKOUT was developed and tested exclusively in an authorized laboratory environment using an intentionally vulnerable Metasploitable 2 virtual machine.
 
 The techniques demonstrated in this project can compromise real systems.
 
-Do not use these techniques against systems, networks, accounts, or services
-without explicit authorization.
+Do not use these techniques against systems, networks, accounts, or services without explicit authorization.
 
-The author is not responsible for misuse of the information or tools contained
-in this repository.
+The author is not responsible for misuse of the information or tools contained in this repository.
 
 👤 Author
 
