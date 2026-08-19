@@ -1,47 +1,44 @@
-# BLACKOUT
-
-### Offensive Security Assessment & Reconnaissance Analysis
+BLACKOUT
+Offensive Security Assessment & Reconnaissance Analysis
 
 BLACKOUT is a hands-on offensive cybersecurity project built to demonstrate an end-to-end penetration-testing workflow in an isolated VMware laboratory.
 
 The project combines network reconnaissance, vulnerability validation, controlled exploitation, post-exploitation verification, and Python-based analysis of Nmap results.
 
-> **Lab Environment:** All security testing was performed against an intentionally vulnerable Metasploitable 2 virtual machine in an isolated laboratory environment.
+Lab Environment: All security testing was performed against an intentionally vulnerable Metasploitable 2 virtual machine in an isolated laboratory environment.
 
----
-
-## 🎯 Objectives
+🎯 Objectives
 
 BLACKOUT was developed to gain practical experience with:
 
-- Network reconnaissance
-- TCP port and service enumeration
-- Service and version fingerprinting
-- Vulnerability research
-- Vulnerability validation
-- Controlled exploitation
-- Post-exploitation verification
-- Security evidence collection
-- Python-based security automation
-- Penetration-testing methodology
+Network reconnaissance
+TCP port and service enumeration
+Service and version fingerprinting
+Vulnerability research
+Vulnerability validation
+Controlled exploitation
+Post-exploitation verification
+Security evidence collection
+Python-based security automation
+Penetration-testing methodology
 
----
+🏗️ Lab Architecture
 
-## 🏗️ Lab Architecture
+Attacker: Kali Linux — 192.168.254.128
 
-```text
-                 VMware Host-Only Network
-                         │
-            ┌────────────┴────────────┐
-            │                         │
-            ▼                         ▼
-     ┌─────────────┐          ┌─────────────────┐
-     │ Kali Linux  │          │ Metasploitable 2│
-     │             │          │                 │
-     │   Attacker  │─────────▶│     Target      │
-     │             │          │                 │
-     │192.168.254.128         │ 192.168.254.130 │
-     └─────────────┘          └─────────────────┘
+Target: Metasploitable 2 — 192.168.254.130
+
+Network: VMware Host-Only Network
+
+Kali Linux
+192.168.254.128
+     │
+     │ Host-Only Network
+     │
+     ▼
+Metasploitable 2
+192.168.254.130
+
 
 Environment
 Component	Role	IP Address
@@ -60,28 +57,20 @@ Python 3
 Regular Expressions
 Command-line processing
 Nmap output parsing
+
 🔎 Assessment Methodology
 
 BLACKOUT follows a simplified penetration-testing methodology:
 
 Reconnaissance
-      ↓
 Service Enumeration
-      ↓
 Version Identification
-      ↓
 Vulnerability Research
-      ↓
 Vulnerability Validation
-      ↓
 Controlled Exploitation
-      ↓
 Post-Exploitation
-      ↓
 Privilege Verification
-      ↓
 Evidence Collection
-      ↓
 Automated Analysis
 1. Reconnaissance
 
@@ -95,17 +84,18 @@ recon.txt
 
 Examples of discovered services included:
 
-21/tcp    FTP
-22/tcp    SSH
-23/tcp    Telnet
-80/tcp    HTTP
-139/tcp   NetBIOS
-445/tcp   SMB
-3306/tcp  MySQL
-5432/tcp  PostgreSQL
-5900/tcp  VNC
-6667/tcp  IRC
-8180/tcp  HTTP
+Port	Service	Version / Information
+21/tcp	FTP	vsftpd 2.3.4
+22/tcp	SSH	OpenSSH 4.7p1
+23/tcp	Telnet	Linux telnetd
+80/tcp	HTTP	Apache 2.2.8
+139/tcp	NetBIOS	Samba
+445/tcp	SMB	Samba
+3306/tcp	MySQL	MySQL 5.0.51a
+5432/tcp	PostgreSQL	PostgreSQL 8.3.x
+5900/tcp	VNC	VNC 3.3
+6667/tcp	IRC	UnrealIRCd
+8180/tcp	HTTP	Apache Tomcat
 2. Vulnerability Identification
 
 During service enumeration, the following service was selected for further investigation:
@@ -139,9 +129,7 @@ This provided a validation step before proceeding with controlled exploitation.
 
 The validated vulnerability was exploited exclusively against the isolated Metasploitable 2 laboratory target.
 
-A Meterpreter session was successfully established:
-
-Meterpreter session 1 opened
+A Meterpreter session was successfully established.
 
 This demonstrated successful remote compromise of the intentionally vulnerable system.
 
@@ -150,13 +138,20 @@ This demonstrated successful remote compromise of the intentionally vulnerable s
 The obtained session was examined to verify the level of access and identify the compromised system.
 
 Identity Verification
+
 Server username: root
+
 Shell Verification
+
 uid=0(root) gid=0(root)
+
 Target Information
-Computer     : metasploitable.localdomain
-OS           : Ubuntu 8.04
-Architecture : i686
+Attribute	Result
+Hostname	metasploitable.localdomain
+Operating System	Ubuntu 8.04
+Architecture	i686
+Privilege	Root
+UID	0
 
 The evidence demonstrates that the controlled exploitation resulted in root-level access to the laboratory target.
 
@@ -173,40 +168,34 @@ Highlights potentially important services.
 Maps known findings to vulnerability information.
 Produces a structured security assessment.
 Usage
+
 python3 blackout.py recon.txt
+
 Example Output
-=================================================================
-                 BLACKOUT SECURITY ASSESSMENT
-=================================================================
 
+The tool produces an assessment containing:
 
-Target services discovered: 23
+Discovered services
+Service severity
+Key findings
+Associated CVEs
+Vulnerability reasoning
+Attack-chain information
 
+Example finding:
 
-ATTACK SURFACE
------------------------------------------------------------------
-21/tcp  ftp          CRITICAL vsftpd 2.3.4
-22/tcp  ssh          INFO     OpenSSH 4.7p1
-23/tcp  telnet       HIGH     Linux telnetd
-...
+CRITICAL — Port 21/tcp
 
+Service: FTP
+Version: vsftpd 2.3.4
+CVE: CVE-2011-2523
+Reason: Known vsftpd 2.3.4 backdoor vulnerability
 
-KEY FINDINGS
------------------------------------------------------------------
-
-
-[CRITICAL] Port 21/tcp
-Service : ftp
-Version : vsftpd 2.3.4
-CVE     : CVE-2011-2523
-Reason  : Known vsftpd 2.3.4 backdoor vulnerability
 📁 Project Structure
 blackout/
-│
 ├── README.md
 ├── blackout.py
 ├── recon.txt
-│
 └── evidence/
     ├── nmap.txt
     └── vulnerability.txt
