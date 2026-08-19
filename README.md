@@ -1,346 +1,366 @@
-🕶️ BLACKOUT
-Offensive Security Assessment & Automated Reconnaissance Analysis
+<div align="center">
 
-A hands-on penetration-testing project combining network reconnaissance, vulnerability assessment, controlled exploitation, post-exploitation verification, and Python-based security analysis.
+# 🕶️ BLACKOUT
 
-📌 Overview
+### Offensive Security Assessment & Automated Reconnaissance
 
-BLACKOUT is an offensive cybersecurity laboratory project designed to simulate a real-world penetration-testing workflow against an intentionally vulnerable system.
+<p>
+<img src="https://img.shields.io/badge/Kali%20Linux-557C94?style=for-the-badge&logo=kalilinux&logoColor=white">
+<img src="https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/Nmap-4D4D4D?style=for-the-badge">
+<img src="https://img.shields.io/badge/Metasploit-2596CD?style=for-the-badge">
+<img src="https://img.shields.io/badge/VMware-607078?style=for-the-badge&logo=vmware&logoColor=white">
+<img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge">
+</p>
 
-The project begins with network reconnaissance and service enumeration, progresses through vulnerability identification and validation, and concludes with controlled exploitation and privilege verification.
+<p>
+<b>A hands-on offensive security laboratory demonstrating reconnaissance,
+vulnerability assessment, controlled exploitation, post-exploitation,
+and automated security analysis.</b>
+</p>
 
-A custom Python tool was also developed to analyze Nmap reconnaissance results and produce a structured security assessment.
+</div>
 
-Core Workflow
+---
+
+## 📌 Overview
+
+**BLACKOUT** is a hands-on offensive security project developed in an isolated VMware laboratory.
+
+The project demonstrates an end-to-end penetration-testing workflow against an intentionally vulnerable **Metasploitable 2** machine.
+
+The assessment progresses through:
+
+```text
 Reconnaissance
-      ↓
+      │
+      ▼
 Service Enumeration
-      ↓
+      │
+      ▼
 Version Detection
-      ↓
-Vulnerability Research
-      ↓
+      │
+      ▼
+Vulnerability Identification
+      │
+      ▼
 Vulnerability Validation
-      ↓
+      │
+      ▼
 Controlled Exploitation
-      ↓
+      │
+      ▼
 Post-Exploitation
-      ↓
+      │
+      ▼
 Privilege Verification
-      ↓
+      │
+      ▼
 Evidence Collection
-      ↓
-Automated Analysis
+```
+BLACKOUT also includes a custom Python tool for analyzing Nmap reconnaissance results and generating structured security findings.
 
-🎯 Objectives
+⚠️ All testing was performed against an intentionally vulnerable machine inside an isolated laboratory environment.
 
-The main goal of BLACKOUT was not simply to exploit a vulnerable machine, but to understand the complete offensive-security process.
+## ⚔️ Attack Laboratory
 
-Security Objectives
-Perform network reconnaissance
-Identify exposed services
-Fingerprint service versions
-Research potential vulnerabilities
-Validate vulnerabilities before exploitation
-Perform controlled exploitation
-Verify obtained privileges
-Collect technical evidence
-Document the attack chain
-Development Objectives
-Parse Nmap output using Python
-Extract service information
-Classify security findings
-Identify high-risk services
-Build a reusable CLI security-analysis tool
-
-🧪 Laboratory Environment
-
-BLACKOUT was developed inside an isolated VMware laboratory.
-
-System	Role	IP Address
-Kali Linux	Attacker / Security Assessment	192.168.254.128
-Metasploitable 2	Intentionally Vulnerable Target	192.168.254.130
-VMware Workstation Pro	Virtualization	—
-
-Network Architecture
                     VMware Host-Only Network
-                              │
-                              │
-                 ┌────────────┴────────────┐
-                 │                         │
-                 ▼                         ▼
-        ┌─────────────────┐      ┌──────────────────┐
-        │   Kali Linux    │      │  Metasploitable 2│
-        │                 │      │                  │
-        │     ATTACKER    │─────▶│      TARGET      │
-        │                 │      │                  │
-        │ 192.168.254.128 │      │ 192.168.254.130  │
-        └─────────────────┘      └──────────────────┘
+                         192.168.254.0/24
+                                │
+               ┌────────────────┴────────────────┐
+               │                                 │
+               ▼                                 ▼
+      ┌──────────────────┐             ┌──────────────────┐
+      │    KALI LINUX    │             │  METASPLOITABLE 2│
+      │                  │             │                  │
+      │     ATTACKER     │────────────▶│      TARGET     │
+      │                  │             │                  │
+      │ 192.168.254.128  │             │ 192.168.254.130  │
+      └──────────────────┘             └──────────────────┘
+               │                                 │
+               ▼                                 ▼
+        Nmap / Metasploit                 Vulnerable Services
+        Python Analysis                    Ubuntu 8.04
 
-Safety: The target is an intentionally vulnerable Metasploitable 2 VM running inside an isolated lab network.
+| Component                  | Role                  | Address            |
+| -------------------------- | --------------------- | ------------------ |
+| 🐉 Kali Linux              | Attacker / Assessment | `192.168.254.128`  |
+| 🎯 Metasploitable 2        | Vulnerable Target     | `192.168.254.130`  |
+| 🖥️ VMware Workstation Pro | Virtualization        | —                  |
+| 🌐 Host-Only Network       | Isolated Lab Network  | `192.168.254.0/24` |
 
-🛠️ Tools & Technologies
-Category	Technologies
-Operating System	Kali Linux
-Target	Metasploitable 2
-Virtualization	VMware Workstation Pro
-Reconnaissance	Nmap
-Exploitation	Metasploit Framework
-Post-Exploitation	Meterpreter
-Development	Python 3
-Parsing	Regular Expressions
-Evidence	Nmap / Metasploit output
+## 🎯 Objectives
 
-🔍 Phase 1 — Reconnaissance
+### 🔐 Security Objectives
 
-Nmap was used to identify exposed TCP services and fingerprint their versions.
+- Perform network reconnaissance
+- Identify exposed services
+- Fingerprint service versions
+- Analyze the attack surface
+- Research vulnerabilities
+- Validate identified vulnerabilities
+- Perform controlled exploitation
+- Verify post-exploitation access
+- Confirm privilege level
+- Preserve assessment evidence
 
-The scan discovered:
+### 🐍 Development Objectives
 
-23 open TCP services
+- Parse Nmap output
+- Extract service information
+- Identify security findings
+- Classify findings by severity
+- Automate reconnaissance analysis
+- Generate structured assessment output
 
-Some of the most relevant findings were:
+## 🛠️ Technology Stack
+| Category          | Technology             | Purpose                      |
+| ----------------- | ---------------------- | ---------------------------- |
+| Operating System  | Kali Linux             | Security testing             |
+| Target            | Metasploitable 2       | Vulnerable laboratory target |
+| Reconnaissance    | Nmap                   | Port & service enumeration   |
+| Exploitation      | Metasploit             | Controlled exploitation      |
+| Post-Exploitation | Meterpreter            | Access verification          |
+| Development       | Python 3               | Security automation          |
+| Virtualization    | VMware Workstation Pro | Laboratory environment       |
 
-Port	Service	Version
-21	FTP	vsftpd 2.3.4
-22	SSH	OpenSSH 4.7p1
-23	Telnet	Linux telnetd
-80	HTTP	Apache 2.2.8
-139	NetBIOS	Samba
-445	SMB	Samba
-3306	MySQL	5.0.51a
-5432	PostgreSQL	8.3.x
-5900	VNC	Protocol 3.3
-6667	IRC	UnrealIRCd
-8180	HTTP	Apache Tomcat
+###🔎 Reconnaissance
 
-The complete reconnaissance output is preserved in:
+Nmap was used to perform service discovery and version detection against the target.
+
+Scan Result
+
+23 open TCP services discovered
+
+Attack Surface
+|       Port | Service    | Version / Information     |
+| ---------: | ---------- | ------------------------- |
+|   `21/tcp` | FTP        | vsftpd 2.3.4              |
+|   `22/tcp` | SSH        | OpenSSH 4.7p1             |
+|   `23/tcp` | Telnet     | Linux telnetd             |
+|   `25/tcp` | SMTP       | Postfix smtpd             |
+|   `53/tcp` | DNS        | ISC BIND 9.4.2            |
+|   `80/tcp` | HTTP       | Apache 2.2.8              |
+|  `111/tcp` | RPC        | rpcbind                   |
+|  `139/tcp` | NetBIOS    | Samba                     |
+|  `445/tcp` | SMB        | Samba                     |
+|  `512/tcp` | rexec      | netkit-rsh                |
+|  `513/tcp` | login      | login service             |
+|  `514/tcp` | shell      | rshd                      |
+| `1099/tcp` | Java RMI   | GNU Classpath             |
+| `1524/tcp` | Bindshell  | Metasploitable root shell |
+| `2049/tcp` | NFS        | NFS v2–4                  |
+| `2121/tcp` | FTP        | ProFTPD 1.3.1             |
+| `3306/tcp` | MySQL      | MySQL 5.0.51a             |
+| `5432/tcp` | PostgreSQL | PostgreSQL 8.3.x          |
+| `5900/tcp` | VNC        | Protocol 3.3              |
+| `6000/tcp` | X11        | X11                       |
+| `6667/tcp` | IRC        | UnrealIRCd                |
+| `8009/tcp` | AJP13      | Apache Jserv              |
+| `8180/tcp` | HTTP       | Apache Tomcat             |
+
+📄 Raw reconnaissance evidence:
 
 recon.txt
 
-🚨 Phase 2 — Vulnerability Identification
+## 🚨 Vulnerability Assessment
 
-The FTP service on port 21 was selected for deeper investigation.
+The FTP service was selected for deeper investigation because it exposed:
 
-Finding
-Attribute	Value
-Port	21/tcp
-Service	FTP
-Version	vsftpd 2.3.4
-Vulnerability	CVE-2011-2523
-Severity	🔴 Critical
+vsftpd 2.3.4
+Critical Finding
+| Attribute | Finding               |
+| --------- | --------------------- |
+| Service   | FTP                   |
+| Port      | `21/tcp`              |
+| Version   | `vsftpd 2.3.4`        |
+| CVE       | `CVE-2011-2523`       |
+| Severity  | 🔴 **CRITICAL**       |
+| Finding   | vsftpd 2.3.4 Backdoor |
 
-The vsftpd 2.3.4 version is associated with a known backdoor vulnerability.
+Why It Matters
 
-A version match alone was not considered sufficient evidence. The vulnerability was subsequently validated using Metasploit.
+The affected vsftpd release is associated with a malicious backdoor that can result in unauthorized command execution.
 
-✅ Phase 3 — Vulnerability Validation
+The vulnerability was validated before exploitation.
 
-The Metasploit module used for validation was:
+## 🧪 Vulnerability Validation
 
+Metasploit Framework was used to validate the identified vulnerability.
+
+Module
+```
 exploit/unix/ftp/vsftpd_234_backdoor
+```
+Validation Result
 
-Metasploit reported:
+```
+[*] 192.168.254.130:21 - FTP banner hints its vulnerable:
+220 (vsFTPd 2.3.4)
 
-The target appears to be vulnerable.
+[*] 192.168.254.130:21 - The target appears to be vulnerable.
+```
 
-This provided an additional validation step before exploitation.
-
-💥 Phase 4 — Controlled Exploitation
+## 💥 Controlled Exploitation
 
 The validated vulnerability was exploited against the isolated Metasploitable 2 target.
 
-The exploitation successfully established a:
+Result
+```
+[+] 192.168.254.130:21 - Backdoor has been spawned!
 
-Meterpreter session
 
-This demonstrated successful remote compromise of the intentionally vulnerable system.
+[*] Meterpreter session 1 opened
+```
+A Meterpreter session was successfully established.
 
-👑 Phase 5 — Privilege Verification
+## 👑 Post-Exploitation
 
-The obtained session was analyzed to determine the level of access.
-
-Identity
+Identity Verification
+```
+meterpreter > getuid
 
 Server username: root
+```
+System Information
+```
+meterpreter > sysinfo
 
-Shell Verification
 
+Computer     : metasploitable.localdomain
+OS           : Ubuntu 8.04
+Architecture : i686
+```
+
+Root Verification
+```
 uid=0(root) gid=0(root)
+```
+### 🔴 ROOT ACCESS VERIFIED
 
-Target
-Attribute	Result
-Hostname	metasploitable.localdomain
-OS	Ubuntu 8.04
-Architecture	i686
-Account	root
-UID	0
-Privilege	🔴 Root
+### 🔗 Attack Chain
+```
+┌─────────────────────────┐
+│     FTP : 21/tcp        │
+│     vsftpd 2.3.4        │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│     CVE-2011-2523       │
+│     Backdoor Vuln.      │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│ Vulnerability Validation│
+│       Metasploit        │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│ Controlled Exploitation │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│   Meterpreter Session   │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│       ROOT ACCESS       │
+│          UID 0          │
+└─────────────────────────┘
+```
+### 🐍 BLACKOUT Analyzer
 
-Attack Chain
-FTP Service
-     │
-     ▼
-vsftpd 2.3.4
-     │
-     ▼
-CVE-2011-2523
-     │
-     ▼
-Vulnerability Validation
-     │
-     ▼
-Controlled Exploitation
-     │
-     ▼
-Meterpreter Session
-     │
-     ▼
-Root Access
+BLACKOUT includes a custom Python-based reconnaissance analyzer.
 
-🐍 BLACKOUT Python Analyzer
+The tool processes Nmap output and converts raw reconnaissance data into structured security findings.
 
-The project includes a custom Python tool that analyzes Nmap reconnaissance output.
-
-Input
-
-recon.txt
-
-Processing
-Nmap Output
-     │
-     ▼
-Service Parser
-     │
-     ▼
-Version Extraction
-     │
-     ▼
-Finding Classification
-     │
-     ▼
-Risk Identification
-     │
-     ▼
+Analysis Pipeline
+Nmap Scan
+    │
+    ▼
+Output Parser
+    │
+    ▼
+Service Extraction
+    │
+    ▼
+Version Detection
+    │
+    ▼
+Risk Classification
+    │
+    ▼
 Security Assessment
-Example
-=============================================================
-              BLACKOUT SECURITY ASSESSMENT
-=============================================================
 
-
-Target services discovered: 23
-
-
-ATTACK SURFACE
--------------------------------------------------------------
-21/tcp  ftp       CRITICAL  vsftpd 2.3.4
-22/tcp  ssh       INFO      OpenSSH 4.7p1
-23/tcp  telnet    HIGH      Linux telnetd
-...
-
-
-KEY FINDINGS
--------------------------------------------------------------
-
-
-[CRITICAL] Port 21/tcp
-Service : ftp
-Version : vsftpd 2.3.4
-CVE     : CVE-2011-2523
-Reason  : Known vsftpd 2.3.4 backdoor vulnerability
-Run
-
+Usage
+```
 python3 blackout.py recon.txt
+```
+### 📊 Assessment Dashboard
 
-📂 Project Structure
+| 🔎 Services | 🚨 Critical | 💥 Exploitation | 👑 Privilege |
+| :---------: | :---------: | :-------------: | :----------: |
+|    **23**   |    **1**    |   **SUCCESS**   |   **ROOT**   |
+
+
+### Key Findings
+
+| Severity    |       Port | Finding                   | Status     |
+| ----------- | ---------: | ------------------------- | ---------- |
+| 🔴 Critical |   `21/tcp` | vsftpd 2.3.4 Backdoor     | Exploited  |
+| 🔴 Critical | `1524/tcp` | Metasploitable Root Shell | Identified |
+| 🟠 High     |   `23/tcp` | Telnet                    | Identified |
+
+### 📂 Project Structure
+```
 blackout/
-│
 ├── README.md
 ├── blackout.py
 ├── recon.txt
-│
 └── evidence/
     ├── nmap.txt
     └── vulnerability.txt
-Components
+```
+### 🧠 Skills Demonstrated
 
-blackout.py
-Custom Python reconnaissance analysis and finding-classification tool.
-
-recon.txt
-Raw Nmap service enumeration output.
-
-evidence/nmap.txt
-Preserved Nmap reconnaissance evidence.
-
-evidence/vulnerability.txt
-Vulnerability validation, exploitation, and privilege-verification evidence.
-
-📊 Results
-Metric	Result
-Target	Metasploitable 2
-Open TCP Services	23
-Primary Vulnerability	CVE-2011-2523
-Vulnerable Service	vsftpd 2.3.4
-Vulnerability Validation	✅ Successful
-Exploitation	✅ Successful
-Meterpreter Session	✅ Obtained
-Root Access	✅ Verified
-Python Automation	✅ Implemented
-🧠 Skills Demonstrated
 Offensive Security
-Network reconnaissance
-Port scanning
-Service enumeration
-Version fingerprinting
-Vulnerability research
-Vulnerability validation
-Controlled exploitation
-Meterpreter
-Post-exploitation
-Privilege verification
-Security Engineering
-Python scripting
-Nmap output parsing
-Regular expressions
-Finding classification
-Security automation
-Evidence collection
-Technical documentation
-Infrastructure
-VMware networking
-Host-only network configuration
-Linux environments
-Attacker/target lab architecture
-🚀 Roadmap
-v1.1
- Improve service parsing
- Expand vulnerability detection
- Add confidence scoring
- Add CVE mapping
-v1.2
- CVSS risk scoring
- JSON output
- Better CLI interface
- Automated evidence collection
-v2.0
- HTML penetration-testing reports
- Attack-chain visualization
- Modular vulnerability engine
- Automated assessment workflow
- Unit testing
-⚠️ Disclaimer
 
-BLACKOUT was developed and tested exclusively within an authorized laboratory environment using an intentionally vulnerable Metasploitable 2 virtual machine.
+Nmap • Metasploit • Meterpreter • Reconnaissance • Enumeration • Vulnerability Assessment • Exploitation • Post-Exploitation
+
+Security Automation
+
+Python • Regex • CLI Tools • Nmap Parsing • Finding Classification • Evidence Processing
+
+Infrastructure
+
+Kali Linux • Metasploitable 2 • VMware Workstation • Host-Only Networking • Linux
+
+### ⚠️ Disclaimer
+
+BLACKOUT was developed and tested exclusively within an authorized cybersecurity laboratory using an intentionally vulnerable Metasploitable 2 virtual machine.
 
 The techniques demonstrated by this project can compromise real systems.
 
-Do not use these techniques against systems, networks, accounts, or services without explicit authorization.
+Never use these techniques against systems, networks, applications, or accounts without explicit authorization.
 
 The author is not responsible for misuse of the information or tools contained in this repository.
 
+
+<div align="center">
 👤 Author
-Sovon Mitro
+
+ Sovon Mitro
 
 Cybersecurity | Penetration Testing | Python | AI/ML
+
+BLACKOUT — Offensive Security Laboratory
+</div> <div align="center">
+
+⭐ If you found this project useful, consider giving the repository a star.
+
+</div> 
