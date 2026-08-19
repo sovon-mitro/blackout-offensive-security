@@ -124,7 +124,7 @@ BLACKOUT also includes a custom Python tool for analyzing Nmap reconnaissance re
 | Development       | Python 3               | Security automation          |
 | Virtualization    | VMware Workstation Pro | Laboratory environment       |
 
-###🔎 Reconnaissance
+### 🔎 Reconnaissance
 
 Nmap was used to perform service discovery and version detection against the target.
 
